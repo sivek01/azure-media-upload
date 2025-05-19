@@ -31,9 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
-src/main/resources/application.yml
-src/main/resources/application.yml
-src/main/resources/application.yml
-src/main/resources/application.yml
-src/main/resources/application.yml
-src/main/resources/application.yml
+
+# Secret config file — ONLY IGNORE IN PRODUCTION
+# Commented out so we can push it now:
+# src/main/resources/application.yml
