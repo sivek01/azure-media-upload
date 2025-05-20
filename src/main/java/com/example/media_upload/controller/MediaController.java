@@ -52,11 +52,16 @@ public class MediaController {
     }
 
     @GetMapping("/status/{fileName}")
-    public ResponseEntity<String> getStatus(@PathVariable String fileName) {
-        return mediaFileRepository.findByFileName(fileName)
-                .map(file -> ResponseEntity.ok("Status: " + file.getStatus()))
-                .orElse(ResponseEntity.status(404).body("File not found"));
+    public ResponseEntity<?> getStatus(@PathVariable String fileName) {
+        List<MediaFile> files = mediaFileRepository.findAllByFileName(fileName);
+        if (files.isEmpty()) {
+            return ResponseEntity.status(404).body("File not found");
+        }
+        // Return latest one or all statuses
+        return ResponseEntity.ok("Statuses: " +
+                files.stream().map(MediaFile::getStatus).toList());
     }
+
 
     @GetMapping("/list")
     public List<String> listBlobs() {
