@@ -49,4 +49,12 @@ public class MediaController {
             return ResponseEntity.status(500).body("Upload failed due to server error.");
         }
     }
+
+    @GetMapping("/status/{fileName}")
+    public ResponseEntity<String> getStatus(@PathVariable String fileName) {
+        return mediaFileRepository.findByFileName(fileName)
+                .map(file -> ResponseEntity.ok("Status: " + file.getStatus()))
+                .orElse(ResponseEntity.status(404).body("File not found"));
+    }
+
 }
