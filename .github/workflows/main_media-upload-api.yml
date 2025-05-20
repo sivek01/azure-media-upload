@@ -46,16 +46,16 @@ jobs:
         with:
           name: java-app
 
-      - name: Login to Azure
+      - name: Login to Azure using OIDC
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_C812FB2C3D304A9386E0A04FA22BF605 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_02DC9C46E3254E90B38FE67BCEDAB362 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_5F05D0D6137841D7972DA555CCBA199A }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'media-upload-api'
+          app-name: 'media-upload-api'     # 🔁 Replace with your actual App Service name if different
           slot-name: 'Production'
           package: '*.jar'
