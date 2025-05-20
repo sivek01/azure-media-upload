@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.*;
 
 @Service
 public class AzureBlobService {
@@ -48,4 +49,18 @@ public class AzureBlobService {
             throw new RuntimeException("Failed to upload file", e);
         }
     }
+
+    public List<String> listFiles() {
+        List<String> files = new ArrayList<>();
+        BlobContainerClient containerClient = new BlobServiceClientBuilder()
+                .connectionString(connectionString)
+                .buildClient()
+                .getBlobContainerClient(containerName);
+
+        for (BlobItem blobItem : containerClient.listBlobs()) {
+            files.add(blobItem.getName());
+        }
+        return files;
+    }
+
 }

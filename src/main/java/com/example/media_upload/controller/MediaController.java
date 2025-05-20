@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/media")
@@ -56,5 +57,11 @@ public class MediaController {
                 .map(file -> ResponseEntity.ok("Status: " + file.getStatus()))
                 .orElse(ResponseEntity.status(404).body("File not found"));
     }
+
+    @GetMapping("/list")
+    public List<String> listBlobs() {
+        return azureBlobService.listFiles();
+    }
+
 
 }
